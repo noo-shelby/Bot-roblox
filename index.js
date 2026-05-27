@@ -1,26 +1,18 @@
 require("dotenv").config();
 
 const express = require("express");
-const { Client, GatewayIntentBits } = require("discord.js");
 const { startRoblox } = require("./roblox");
 
 const app = express();
-app.get("/", (req, res) => res.send("Shelby Bot Online"));
-app.listen(process.env.PORT || 3000);
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
+app.get("/", (req, res) => {
+    res.send("Roblox Bot Online 🚀");
 });
 
-client.once("ready", async () => {
-    console.log(`🚀 Discord Online: ${client.user.tag}`);
+app.listen(process.env.PORT || 3000, async () => {
+    console.log("🌐 [SERVER] Rodando na porta:", process.env.PORT || 3000);
 
-    // conecta Roblox separado (IMPORTANTE)
+    console.log("📦 [ENV] ROBLOX_COOKIE existe?", !!process.env.ROBLOX_COOKIE);
+
     await startRoblox();
 });
-
-client.login(process.env.DISCORD_TOKEN);
